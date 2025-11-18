@@ -1,0 +1,6 @@
+node_modules
+npm/
+prompts.gen.ts
+prompts/
+.DS_Store
+*.log

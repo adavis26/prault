@@ -1,0 +1,15 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-read --watch main.ts",
+    "generate": "deno run --allow-read --allow-write generate-prompts.ts",
+    "gen": "deno run --allow-read --allow-write generate-prompts.ts",
+    "build": "deno task gen && deno check mod.ts && deno check main.ts && deno lint .",
+    "test": "deno test --allow-read tests/",
+    "build-npm": "deno run --allow-all build_npm.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "zod": "npm:zod@^3.25.56",
+    "dnt": "https://deno.land/x/dnt/mod.ts"
+  }
+}

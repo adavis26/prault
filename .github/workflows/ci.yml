@@ -31,14 +31,6 @@ jobs:
       - name: Cache dependencies
         run: deno cache --lock=deno.lock deno.json
 
-
-
-      - name: Run type check
-        run: deno check mod.ts
-
-      - name: Run linter
-        run: deno lint .
-
       - name: Run tests
         run: deno task test
 

@@ -51,9 +51,6 @@ jobs:
       - name: Cache dependencies
         run: deno cache --lock=deno.lock deno.json
 
-      - name: Generate prompts
-        run: deno task generate
-
       - name: Build npm package
         run: deno task build-npm
 
@@ -81,9 +78,6 @@ jobs:
 
       - name: Cache dependencies
         run: deno cache --lock=deno.lock deno.json
-
-      - name: Generate prompts
-        run: deno task generate
 
       - name: Publish to JSR
         run: deno publish

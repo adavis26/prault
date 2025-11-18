@@ -1,24 +1,25 @@
-# Prault
+# 🎭 Prault
 
-A TypeScript library for managing and templating prompts from Markdown or text files.
+**Prompt management made delightful!** ✨
 
-## Features
+Transform your Markdown and text files into type-safe, templated prompts with zero ceremony. Perfect for AI apps, chatbots, content generation, and anything that needs organized prompt management.
 
-- Type-safe prompt access with auto-completion
-- Template replacement in prompts using `{{{KEY}}}` placeholders
-- Support for both Deno and Node.js
-- Synchronous file reading for easy usage
+## ✨ Features
 
-## Installation
+- 🎯 **Type-safe prompt access** - Auto-completion for all your prompts
+- 🔄 **Template magic** - Replace `{{{KEY}}}` placeholders at runtime
+- 🚀 **Cross-platform** - Works in Deno and Node.js
+- ⚡ **Synchronous** - No async/await headaches for file reading
+- 📁 **Directory-based** - Organize prompts however you like
 
-### Deno
+## 📦 Installation
 
+### For Deno 🦕
 ```bash
 import { initPrault } from "https://deno.land/x/prault/mod.ts";
 ```
 
-### npm
-
+### For Node.js 🟢
 ```bash
 npm install prault
 ```
@@ -27,67 +28,103 @@ npm install prault
 import { initPrault } from "prault";
 ```
 
-## Usage
+## 🎉 Quick Start
 
-1. Create a `prompts` directory with your prompt files (`.md` or `.txt`).
-
-2. Run the generator to create type-safe access:
+1. **Create your prompts directory**
    ```bash
-   deno run --allow-read --allow-write https://deno.land/x/prault/generate-prompts.ts
+   mkdir prompts
    ```
 
-3. Use in your code:
+2. **Add some prompt files**
+   ```markdown
+   <!-- prompts/greeting.md -->
+   # Welcome!
 
-```typescript
-import { initPrault } from "prault";
+   Hello {{{NAME}}}! 👋
 
-const prault = initPrault({ promptsDir: "./prompts" });
+   Welcome to our awesome app!
+   ```
 
-// Get a prompt
-const prompt = prault.example();
+   ```markdown
+   <!-- prompts/code-review.md -->
+   # Code Review Guidelines
 
-// With template replacement
-const personalized = prault.greeting({ "NAME": "World" });
-```
+   Please review this {{{LANGUAGE}}} code for:
+   - Security issues
+   - Performance optimizations
+   - Code style consistency
+   ```
 
-## Prompt Files
+3. **Use in your code**
+   ```typescript
+   import { initPrault } from "prault";
 
-Prompts are Markdown or text files. Use `{{{KEY}}}` for placeholders:
+   const prompts = initPrault();
+
+   // Get a prompt
+   const greeting = prompts.greeting();
+   console.log(greeting);
+   // "Hello {{{NAME}}}! 👋\n\nWelcome to our awesome app!"
+
+   // With template replacement
+   const personalized = prompts.greeting({ NAME: "Alice" });
+   console.log(personalized);
+   // "Hello Alice! 👋\n\nWelcome to our awesome app!"
+
+   // Type-safe auto-completion for all your prompts!
+   const review = prompts.codeReview({ LANGUAGE: "TypeScript" });
+   ```
+
+## 🎨 Prompt Files
+
+Prault works with `.md` and `.txt` files. Use `{{{KEY}}}` for dynamic content:
 
 ```markdown
-# Greeting
+# My Amazing Prompt
 
-Hello {{{NAME}}}!
+This is some static content.
 
-Welcome to our app.
+Here's the dynamic part: {{{USER_INPUT}}}
+
+And here's another: {{{CONTEXT}}}
 ```
 
-## API
+**File naming becomes method names:**
+- `greeting.md` → `prompts.greeting()`
+- `code-review.md` → `prompts.codeReview()`
+- `nested/deep/thought.md` → `prompts.nestedDeepThought()`
 
-### `initPrault(config?: PraultConfig): Prault`
+## 🔧 API
 
-Initializes the prompt loader.
+### `initPrault(config?: PraultConfig)`
 
-- `config.promptsDir`: Path to the prompts directory (default: `"prompts"`)
+Creates your prompt loader instance.
 
-Returns a `Prault` instance with methods for each prompt file.
+```typescript
+const prompts = initPrault({
+  promptsDir: "./my-prompts" // defaults to "./prompts"
+});
+```
 
 ### Prompt Methods
 
-Each prompt file becomes a method on the `Prault` instance:
+Each `.md`/`.txt` file becomes a method:
 
-- `prault.filename(replacements?: Record<string, string>): string`
+```typescript
+// Synchronous string return
+const content: string = prompts.yourPromptName();
 
-## Building for npm
-
-To build the npm package:
-
-```bash
-deno task build-npm
+// With replacements
+const content: string = prompts.yourPromptName({
+  KEY: "value",
+  ANOTHER_KEY: "another value"
+});
 ```
 
-This generates a `./npm` directory with the Node.js compatible code.
+## 🤝 Contributing
 
-## License
+Want to help make Prault even better? Check out our [development docs](./DEVELOPMENT.md) for build instructions, testing, and contribution guidelines!
 
-MIT
+## 📄 License
+
+MIT - Go build something awesome! 🚀

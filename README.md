@@ -2,15 +2,19 @@
 
 **Prompt management made delightful!** ✨
 
+[![CI/CD](https://github.com/adavis26/prault/actions/workflows/ci.yml/badge.svg)](https://github.com/adavis26/prault/actions/workflows/ci.yml)
+[![JSR](https://jsr.io/badges/@yourusername/prault)](https://jsr.io/@yourusername/prault)
+[![npm](https://img.shields.io/npm/v/prault)](https://www.npmjs.com/package/prault)
+
 Transform your Markdown and text files into type-safe, templated prompts with zero ceremony. Perfect for AI apps, chatbots, content generation, and anything that needs organized prompt management.
 
 ## ✨ Features
 
-- 🎯 **Type-safe prompt access** - Auto-completion for all your prompts
-- 🔄 **Template magic** - Replace `{{{KEY}}}` placeholders at runtime
-- 🚀 **Cross-platform** - Works in Deno and Node.js
-- ⚡ **Synchronous** - No async/await headaches for file reading
-- 📁 **Directory-based** - Organize prompts however you like
+- **Type-safe prompt access** - Auto-completion for all your prompts
+- **Router Based File Detection** - No configuration needed
+- **Template Variables** - Replace `{{{KEY}}}` placeholders at runtime
+- **Cross-platform** - Works in Deno and Node.js
+- **Synchronous** - No async/await headaches for file reading
 
 ## 📦 Installation
 

@@ -77,20 +77,138 @@ prault/
 
 ## 📦 Publishing
 
-### To deno.land/x
+### First Time Setup
+
+1. **Create JSR account** (if publishing to JSR):
+   ```bash
+   deno publish --dry-run  # This will prompt you to authenticate
+   ```
+
+2. **Create npm account** (if publishing to npm):
+   ```bash
+   npm login
+   ```
+
+### Publishing to JSR (JavaScript Registry) 🦕
+
+JSR is Deno's official package registry - recommended for Deno projects!
+
+1. **Make sure everything is ready**:
+   ```bash
+   deno task test
+   deno task build
+   ```
+
+2. **Dry run first**:
+   ```bash
+   deno publish --dry-run
+   ```
+
+3. **Publish to JSR**:
+   ```bash
+   deno publish
+   ```
+
+4. **Tag the release** (optional but recommended):
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+### Publishing to npm 🟢
+
+For Node.js users and broader ecosystem compatibility:
+
+1. **Build the npm package**:
+   ```bash
+   deno task build-npm
+   ```
+
+2. **Test the npm package** (recommended):
+   ```bash
+   cd npm
+   npm pack --dry-run  # See what would be published
+   ```
+
+3. **Publish to npm**:
+   ```bash
+   cd npm
+   npm publish
+   ```
+
+4. **Verify publication**:
+   ```bash
+   npm view prault versions  # Check if it published
+   ```
+
+### Publishing to Both Registries
+
+For maximum compatibility, publish to both:
 
 ```bash
-# Tag a release
-git tag v1.0.0
-git push origin v1.0.0
+# Publish to JSR
+deno publish
+
+# Build and publish to npm
+deno task build-npm
+cd npm && npm publish
 ```
 
-### To npm
+### Automated Publishing with CI/CD
+
+This project uses GitHub Actions for automated publishing. When you create a GitHub release, the CI/CD pipeline will automatically:
+
+1. **Run tests** on multiple Deno versions
+2. **Build npm package**
+3. **Publish to JSR** (if `DENO_AUTH_TOKEN` is configured)
+4. **Publish to npm** (if `NPM_TOKEN` is configured)
+
+#### Setting up Publishing Secrets
+
+1. **For JSR publishing**:
+   - Go to [jsr.io](https://jsr.io) and create an account
+   - Generate an auth token in your account settings
+   - Add `DENO_AUTH_TOKEN` to your GitHub repository secrets
+
+2. **For npm publishing**:
+   - Create an npm account at [npmjs.com](https://npmjs.com)
+   - Generate an automation token: `npm token create --read-only=false`
+   - Add `NPM_TOKEN` to your GitHub repository secrets
+
+#### Manual Publishing
+
+If you prefer to publish manually:
 
 ```bash
-cd npm
-npm publish
+# JSR
+deno publish
+
+# npm
+deno task build-npm
+cd npm && npm publish
 ```
+
+### Version Management
+
+- **Keep versions in sync** between JSR and npm
+- **Use semantic versioning**: `major.minor.patch`
+- **Update version in build_npm.ts** for npm package.json generation
+
+### Troubleshooting
+
+**JSR Issues:**
+- Make sure you're authenticated: `deno publish --dry-run`
+- Check package name availability on jsr.io
+
+**npm Issues:**
+- Verify npm login: `npm whoami`
+- Check package name availability: `npm view prault`
+- Make sure version doesn't already exist
+
+**Common Issues:**
+- Run tests before publishing: `deno task test`
+- Ensure all files are committed: `git status`
+- Check that builds pass: `deno task build`
 
 ## 🧪 Testing
 

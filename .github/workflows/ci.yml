@@ -31,6 +31,12 @@ jobs:
       - name: Cache dependencies
         run: deno cache --lock=deno.lock deno.json
 
+      - name: Create test prompts directory
+        run: |
+          mkdir -p prompts
+          echo "# Test Prompt\n\nHello {{{NAME}}}!" > prompts/test.md
+          echo "Another test prompt with {{{VALUE}}}." > prompts/example.txt
+
       - name: Generate prompts
         run: deno task generate
 

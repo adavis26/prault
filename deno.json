@@ -1,9 +1,9 @@
 {
   "tasks": {
     "dev": "deno run --allow-read --watch main.ts",
-    "generate": "deno run --allow-read --allow-write generate-prompts.ts",
-    "gen": "deno run --allow-read --allow-write generate-prompts.ts",
-    "build": "deno task gen && deno check mod.ts && deno check main.ts && deno lint .",
+    "generate": "deno run --allow-read --allow-write mod.ts",
+    "gen": "deno run --allow-read --allow-write mod.ts",
+    "build": "deno task gen && deno check mod.ts && deno lint .",
     "test": "deno test --allow-read tests/",
     "build-npm": "deno run --allow-all build_npm.ts"
   },

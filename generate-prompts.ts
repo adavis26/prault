@@ -1,7 +1,7 @@
 // This script generates a TypeScript module for type-safe prompt access
 // Run with: deno run --allow-read --allow-write generate-prompts.ts
 
-import { join } from "@std/path";
+import { join } from "https://deno.land/std@0.224.0/path/mod.ts";
 
 const PROMPTS_DIR = join(Deno.cwd(), "prompts");
 const OUTPUT_FILE = join(Deno.cwd(), "prompts.gen.ts");
@@ -67,9 +67,9 @@ async function main() {
   )
     .join("\n\n");
   const praultClass =
-    `export class Prault {\n  constructor(private _promptsDir: string = 'prompts') {}\n  private _getPrompt(path: string[], replacements?: Record<string, string>): string {\n    const joined = path.join('/');\n    const basePath = join(this._promptsDir, joined);\n    let content;\n    try {\n      content = Deno.readTextFileSync(basePath + '.md');\n    } catch {\n      content = Deno.readTextFileSync(basePath + '.txt');\n    }\n    if (replacements) {\n      for (const [key, value] of Object.entries(replacements)) {\n        content = content.replaceAll('{{{' + key + '}}}', value);\n      }\n    }\n    return content;\n  }\n${methods}\n}\n`;
+    `export class Prault {\n  constructor(private _promptsDir: string = 'prompts') {}\n  private _getPrompt(path: string[], replacements?: Record<string, string>): string {\n    const joined = path.join('/');\n    const basePath = join(this._promptsDir, joined);\n    let content;\n    try {\n      content = Deno.readTextFileSync(basePath + '.md');\n    } catch {\n      content = Deno.readTextFileSync(basePath + '.txt');\n    }\n    if (replacements) {\n      for (const [key, value] of Object.entries(replacements)) {\n        content = content.replaceAll('{{{' + key + '}}}', value);\n      }\n    }\n    return content;\n  }\n${methods}\n}\n\nexport interface PraultConfig {\n  promptsDir?: string;\n}\n\nexport function initPrault(config: PraultConfig = {}): Prault {\n  return new Prault(config.promptsDir ?? "prompts");\n}`;
   const code =
-    `// AUTO-GENERATED FILE. DO NOT EDIT.\n\nimport { join } from \"@std/path\";\n\n${promptNameType}${praultClass}`;
+    `// AUTO-GENERATED FILE. DO NOT EDIT.\n\nimport { join } from \"https://deno.land/std@0.224.0/path/mod.ts\";\n\n${promptNameType}${praultClass}`;
   await Deno.writeTextFile(OUTPUT_FILE, code);
   console.log(`Generated ${OUTPUT_FILE}`);
 }

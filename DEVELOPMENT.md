@@ -55,10 +55,9 @@ deno task build
 
 ```
 prault/
-├── mod.ts              # Main public API
+├── mod.ts              # Code generator (published)
+├── router.ts           # File utilities
 ├── prompts.gen.ts      # Auto-generated prompt loader (gitignored)
-├── generate-prompts.ts # Generator script
-├── build_npm.ts        # npm build script
 ├── prompts/            # Example prompts (gitignored)
 ├── tests/              # Unit tests
 ├── npm/                # Generated npm package (gitignored)

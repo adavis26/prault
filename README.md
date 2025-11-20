@@ -20,26 +20,25 @@ Transform your Markdown and text files into type-safe, templated prompts with ze
 
 ### For Deno 🦕
 ```bash
-import { initPrault } from "https://deno.land/x/prault/mod.ts";
+import { initPrault } from "./prompts.gen.ts";
 ```
 
 ### For Node.js 🟢
 ```bash
-npm install prault
-```
-
-```typescript
-import { initPrault } from "prault";
+# After generating prompts.gen.ts
+import { initPrault } from "./prompts.gen.js";
 ```
 
 ## 🎉 Quick Start
 
-1. **Create your prompts directory**
+1. **Install the package** (contains the code generator)
+
+2. **Create your prompts directory**
    ```bash
    mkdir prompts
    ```
 
-2. **Add some prompt files**
+3. **Add some prompt files**
    ```markdown
    <!-- prompts/greeting.md -->
    # Welcome!
@@ -49,19 +48,18 @@ import { initPrault } from "prault";
    Welcome to our awesome app!
    ```
 
-   ```markdown
-   <!-- prompts/code-review.md -->
-   # Code Review Guidelines
+4. **Generate your type-safe code**
+   ```bash
+   # If using the published npm package
+   npx prault
 
-   Please review this {{{LANGUAGE}}} code for:
-   - Security issues
-   - Performance optimizations
-   - Code style consistency
+   # Or if using Deno directly
+   deno run --allow-read --allow-write npm:prault
    ```
 
-3. **Use in your code**
+5. **Use in your code**
    ```typescript
-   import { initPrault } from "prault";
+   import { initPrault } from "./prompts.gen.ts";
 
    const prompts = initPrault();
 

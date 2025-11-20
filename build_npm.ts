@@ -18,6 +18,9 @@ await build({
     version: "1.0.0",
     description: "A TypeScript library for managing and templating prompts from files.",
     license: "MIT",
+    bin: {
+      "prault": "./esm/mod.js"
+    },
     repository: {
       type: "git",
       url: "git+https://github.com/yourusername/prault.git",

@@ -117,9 +117,9 @@ jobs:
           path: npm/
 
       - name: Install dependencies
-        run: cd npm && npm ci
+        run: npm ci
+        working-directory: npm/
 
       - name: Publish to npm
-        run: cd npm && npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
+        working-directory: npm/

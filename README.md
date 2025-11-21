@@ -3,8 +3,10 @@
 **Prompt management made delightful!** ✨
 
 [![CI/CD](https://github.com/adavis26/prault/actions/workflows/ci.yml/badge.svg)](https://github.com/adavis26/prault/actions/workflows/ci.yml)
-[![JSR](https://jsr.io/badges/@yourusername/prault)](https://jsr.io/@yourusername/prault)
+[![JSR](https://jsr.io/badges/@adavis26/prault)](https://jsr.io/@adavis26/prault)
 [![npm](https://img.shields.io/npm/v/prault)](https://www.npmjs.com/package/prault)
+
+Transform your Markdown and text files into type-safe, templated prompts with zero ceremony. Perfect for AI apps, chatbots, content generation, and anything that needs organized prompt management.
 
 Transform your Markdown and text files into type-safe, templated prompts with zero ceremony. Perfect for AI apps, chatbots, content generation, and anything that needs organized prompt management.
 

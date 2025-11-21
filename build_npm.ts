@@ -2,6 +2,9 @@
 
 import { build, emptyDir } from "dnt";
 
+// Read package configuration from deno.json
+const denoConfig = JSON.parse(Deno.readTextFileSync("deno.json"));
+
 await emptyDir("./npm");
 
 await build({
@@ -13,25 +16,32 @@ await build({
   },
   test: false,
   package: {
-    // package.json properties
-    name: "prault",
-    version: "1.0.0",
-    description: "A TypeScript library for managing and templating prompts from files.",
-    license: "MIT",
+    // package.json properties from deno.json
+    name: denoConfig.name,
+    version: denoConfig.version,
+    description: denoConfig.description,
+    license: denoConfig.license,
     bin: {
-      "prault": "./esm/mod.js"
+      "prault": "./script/mod.js"
     },
-    repository: {
-      type: "git",
-      url: "git+https://github.com/yourusername/prault.git",
-    },
-    bugs: {
-      url: "https://github.com/yourusername/prault/issues",
-    },
+    repository: denoConfig.repository,
+    bugs: denoConfig.bugs,
   },
   postBuild() {
     // steps to run after building and before running the tests
     Deno.copyFileSync("LICENSE", "npm/LICENSE");
     Deno.copyFileSync("README.md", "npm/README.md");
+    
+    // Add shebang to the CLI script and make it executable
+    const scriptPath = "./npm/script/mod.js";
+    const content = Deno.readTextFileSync(scriptPath);
+    if (!content.startsWith("#!/usr/bin/env node")) {
+      Deno.writeTextFileSync(scriptPath, "#!/usr/bin/env node\n" + content);
+    }
+    
+    // Make the script executable
+    const scriptPathFull = new URL(scriptPath, import.meta.url).pathname;
+    const chmodCmd = new Deno.Command("chmod", { args: ["+x", scriptPathFull] });
+    chmodCmd.outputSync();
   },
 });

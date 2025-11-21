@@ -90,6 +90,9 @@ jobs:
     needs: build-npm
     if: github.event_name == 'release'
 
+    permissions:
+      id-token: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -110,6 +113,6 @@ jobs:
         run: cd npm && npm ci
 
       - name: Publish to npm
-        run: cd npm && npm publish
+        run: cd npm && npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

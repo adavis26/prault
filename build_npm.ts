@@ -17,7 +17,7 @@ await build({
   test: false,
   package: {
     // package.json properties from deno.json
-    name: denoConfig.name,
+    name: 'prault',
     version: denoConfig.version,
     description: denoConfig.description,
     license: denoConfig.license,

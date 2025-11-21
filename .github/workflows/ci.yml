@@ -69,6 +69,10 @@ jobs:
     # if: github.event_name == 'release'
     if: github.event_name == 'release' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
 
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -82,7 +86,7 @@ jobs:
         run: deno cache --lock=deno.lock deno.json
 
       - name: Publish to JSR
-        run: deno publish
+        run: npx jsr publish
 
   publish-npm:
     name: Publish to npm

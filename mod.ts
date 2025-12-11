@@ -58,7 +58,7 @@ function collectPromptEntries(
   return entries;
 }
 
-async function main() {
+export async function main() {
   const tree = await scanDir(PROMPTS_DIR);
   const promptNames = collectPromptNames(tree);
   const promptNameType = `export type PromptName = ${

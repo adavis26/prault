@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "name": "@adavisdev/prault",
   "description": "A TypeScript library for managing and templating prompts from files.",
   "license": "MIT",

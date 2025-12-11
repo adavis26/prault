@@ -22,7 +22,7 @@ await build({
     description: denoConfig.description,
     license: denoConfig.license,
     bin: {
-      "prault": "esm/mod.js"
+      "prault": "bin/prault"
     },
     repository: denoConfig.repository,
     bugs: denoConfig.bugs,
@@ -32,16 +32,20 @@ await build({
     Deno.copyFileSync("LICENSE", "npm/LICENSE");
     Deno.copyFileSync("README.md", "npm/README.md");
     
-    // Add shebang to the CLI script (ESM version for bin)
-    const scriptPath = "./npm/esm/mod.js";
-    const content = Deno.readTextFileSync(scriptPath);
-    if (!content.startsWith("#!/usr/bin/env node")) {
-      Deno.writeTextFileSync(scriptPath, "#!/usr/bin/env node\n" + content);
-    }
+    // Create bin directory and wrapper script
+    Deno.mkdirSync("npm/bin", { recursive: true });
+    const binScript = `#!/usr/bin/env node
+
+const { main } = require("../esm/mod.js");
+
+main();
+`;
+    Deno.writeTextFileSync("npm/bin/prault", binScript);
     
-    // Make the script executable
-    const scriptPathFull = new URL(scriptPath, import.meta.url).pathname;
-    const chmodCmd = new Deno.Command("chmod", { args: ["+x", scriptPathFull] });
+    // Make the bin script executable
+    const binPath = "./npm/bin/prault";
+    const binPathFull = new URL(binPath, import.meta.url).pathname;
+    const chmodCmd = new Deno.Command("chmod", { args: ["+x", binPathFull] });
     chmodCmd.outputSync();
   },
 });

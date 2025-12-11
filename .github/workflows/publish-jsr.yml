@@ -1,0 +1,34 @@
+name: Publish JSR
+
+on:
+  push:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+jobs:
+  publish-jsr:
+    name: Publish to JSR
+    runs-on: ubuntu-latest
+    # TEMPORARY: Allow pushes to main during alpha development
+    # if: github.event_name == 'release'
+    if: github.event_name == 'release' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+
+    permissions:
+      contents: read
+      id-token: write  # JSR OIDC token
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: "2.x"
+
+      - name: Cache dependencies
+        run: deno cache --lock=deno.lock deno.json
+
+      - name: Publish to JSR
+        run: npx jsr publish

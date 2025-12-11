@@ -1,12 +1,10 @@
-name: CI/CD
+name: CI
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  release:
-    types: [ published ]
 
 jobs:
   test:
@@ -60,66 +58,3 @@ jobs:
           name: npm-package
           path: npm/
           retention-days: 30
-
-  publish-jsr:
-    name: Publish to JSR
-    runs-on: ubuntu-latest
-    needs: test
-    # TEMPORARY: Allow pushes to main during alpha development
-    # if: github.event_name == 'release'
-    if: github.event_name == 'release' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
-
-    permissions:
-      contents: read
-      id-token: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: "2.x"
-
-      - name: Cache dependencies
-        run: deno cache --lock=deno.lock deno.json
-
-      - name: Publish to JSR
-        run: npx jsr publish
-
-  publish-npm:
-    name: Publish to npm
-    runs-on: ubuntu-latest
-    needs: build-npm
-    # TEMPORARY: Allow pushes to main during alpha development
-    # if: github.event_name == 'release'
-    if: github.event_name == 'release' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
-
-    permissions:
-      contents: read
-      id-token: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          registry-url: "https://registry.npmjs.org"
-
-      - name: Download npm build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: npm-package
-          path: npm/
-
-      - name: Install dependencies
-        run: npm ci
-        working-directory: npm/
-
-      - name: Publish to npm
-        run: npm publish
-        working-directory: npm/

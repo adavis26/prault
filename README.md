@@ -6,8 +6,9 @@
 [![JSR](https://jsr.io/badges/@adavis26/prault)](https://jsr.io/@adavis26/prault)
 [![npm](https://img.shields.io/npm/v/prault)](https://www.npmjs.com/package/prault)
 
-Transform your Markdown and text files into type-safe, templated prompts with zero ceremony. Perfect for AI apps, chatbots, content generation, and anything that needs organized prompt management.
-## Overview
+Keep prompts organized in files. Get full TypeScript support. Replace messy strings with easy auto completion.
+
+## Quick Start
 ```
 > npx prault
 Generated prompts.gen.ts
@@ -24,7 +25,7 @@ prompts.hello({NAME: "adam"})
 // Hello adam
 ```
 
-## ✨ Features
+## Features
 
 - **Type-safe prompt access** - Auto-completion for all your prompts
 - **Router Based File Detection** - No configuration needed
@@ -32,117 +33,57 @@ prompts.hello({NAME: "adam"})
 - **Cross-platform** - Works in Deno and Node.js
 - **Synchronous** - No async/await headaches for file reading
 
-## 📦 Installation
+## Installation
 
-### For Deno
 ```bash
+# NPM
+npm install -g prault
+
+# Deno
+deno add jsr:@adavisdev/prault
+```
+
+## Generate `promt.gen.ts`
+```bash
+# cli
+prault
+
+# npx
+npx prault
+
+# deno
+deno run -R -W jsr:@adavisdev/prault
+```
+
+## Usage
+
+1. Create a `prompts` directory with `.md` or `.txt` files
+   ```
+   prompts/
+   ├── greeting.md
+   ├── code-review.md
+   └── chat/
+       └── welcome-message.md
+   ```
+2. Run `npx prault` to generate `prompts.gen.ts`
+3. Use the generated code in your project
+
+```typescript
 import { initPrault } from "./prompts.gen.ts";
+
+const prompts = initPrault();
+
+// Get prompts
+const greeting = prompts.greeting();
+const personalized = prompts.greeting({ NAME: "Alice" });
 ```
 
-### For Node.js
-```bash
-# After generating prompts.gen.ts
-import { initPrault } from "./prompts.gen.js";
-```
+## File Structure
 
-## 🎉 Quick Start
+- `prompts/greeting.md` → `prompts.greeting()`
+- `prompts/code/review.md` → `prompts.codeReview()`
+- Use `{{{KEY}}}` for template variables
 
-1. **Install the package** (contains the code generator)
+## License
 
-2. **Create your prompts directory**
-   ```bash
-   mkdir prompts
-   ```
-
-3. **Add some prompt files**
-   ```markdown
-   <!-- prompts/greeting.md -->
-   # Welcome!
-
-   Hello {{{NAME}}}! 👋
-
-   Welcome to our awesome app!
-   ```
-
-4. **Generate your type-safe code**
-   ```bash
-   # If using the published npm package
-   npx prault
-
-   # Or if using Deno directly
-   deno run --allow-read --allow-write npm:prault
-   ```
-
-5. **Use in your code**
-   ```typescript
-   import { initPrault } from "./prompts.gen.ts";
-
-   const prompts = initPrault();
-
-   // Get a prompt
-   const greeting = prompts.greeting();
-   console.log(greeting);
-   // "Hello {{{NAME}}}! 👋\n\nWelcome to our awesome app!"
-
-   // With template replacement
-   const personalized = prompts.greeting({ NAME: "Alice" });
-   console.log(personalized);
-   // "Hello Alice! 👋\n\nWelcome to our awesome app!"
-
-   // Type-safe auto-completion for all your prompts!
-   const review = prompts.codeReview({ LANGUAGE: "TypeScript" });
-   ```
-
-## 🎨 Prompt Files
-
-Prault works with `.md` and `.txt` files. Use `{{{KEY}}}` for dynamic content:
-
-```markdown
-# My Amazing Prompt
-
-This is some static content.
-
-Here's the dynamic part: {{{USER_INPUT}}}
-
-And here's another: {{{CONTEXT}}}
-```
-
-**File naming becomes method names:**
-- `greeting.md` → `prompts.greeting()`
-- `code-review.md` → `prompts.codeReview()`
-- `nested/deep/thought.md` → `prompts.nestedDeepThought()`
-
-## 🔧 API
-
-### `initPrault(config?: PraultConfig)`
-
-Creates your prompt loader instance.
-
-```typescript
-const prompts = initPrault({
-  promptsDir: "./my-prompts" // defaults to "./prompts"
-});
-```
-
-### Prompt Methods
-
-Each `.md`/`.txt` file becomes a method:
-
-```typescript
-// Synchronous string return
-const content: string = prompts.yourPromptName();
-
-// With replacements
-const content: string = prompts.yourPromptName({
-  KEY: "value",
-  ANOTHER_KEY: "another value"
-});
-```
-
-## 🤝 Contributing
-
-Want to help make Prault even better? Check out our [development docs](./DEVELOPMENT.md) for build instructions, testing, and contribution guidelines!
-
-## 📄 License
-
-MIT - Go build something awesome! 🚀
+MIT

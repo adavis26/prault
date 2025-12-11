@@ -22,7 +22,7 @@ await build({
     description: denoConfig.description,
     license: denoConfig.license,
     bin: {
-      "prault": "./script/mod.js"
+      "prault": "esm/mod.js"
     },
     repository: denoConfig.repository,
     bugs: denoConfig.bugs,
@@ -32,8 +32,8 @@ await build({
     Deno.copyFileSync("LICENSE", "npm/LICENSE");
     Deno.copyFileSync("README.md", "npm/README.md");
     
-    // Add shebang to the CLI script and make it executable
-    const scriptPath = "./npm/script/mod.js";
+    // Add shebang to the CLI script (ESM version for bin)
+    const scriptPath = "./npm/esm/mod.js";
     const content = Deno.readTextFileSync(scriptPath);
     if (!content.startsWith("#!/usr/bin/env node")) {
       Deno.writeTextFileSync(scriptPath, "#!/usr/bin/env node\n" + content);

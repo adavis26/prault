@@ -1,14 +1,28 @@
-# 🎭 Prault
+# Prault
 
-**Prompt management made delightful!** ✨
+**Prompt Vault** | A simple, typesafe, file router based prompt management tool.
 
 [![CI/CD](https://github.com/adavis26/prault/actions/workflows/ci.yml/badge.svg)](https://github.com/adavis26/prault/actions/workflows/ci.yml)
 [![JSR](https://jsr.io/badges/@adavis26/prault)](https://jsr.io/@adavis26/prault)
 [![npm](https://img.shields.io/npm/v/prault)](https://www.npmjs.com/package/prault)
 
 Transform your Markdown and text files into type-safe, templated prompts with zero ceremony. Perfect for AI apps, chatbots, content generation, and anything that needs organized prompt management.
+## Overview
+```
+> npx prault
+Generated prompts.gen.ts
 
-Transform your Markdown and text files into type-safe, templated prompts with zero ceremony. Perfect for AI apps, chatbots, content generation, and anything that needs organized prompt management.
+// main.ts
+import { initPrault } from 'prault';
+
+const prompts = initPrault()
+
+prompts.test()
+// I am a test prompt!
+
+prompts.hello({NAME: "adam"})
+// Hello adam
+```
 
 ## ✨ Features
 
@@ -20,12 +34,12 @@ Transform your Markdown and text files into type-safe, templated prompts with ze
 
 ## 📦 Installation
 
-### For Deno 🦕
+### For Deno
 ```bash
 import { initPrault } from "./prompts.gen.ts";
 ```
 
-### For Node.js 🟢
+### For Node.js
 ```bash
 # After generating prompts.gen.ts
 import { initPrault } from "./prompts.gen.js";

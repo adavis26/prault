@@ -108,4 +108,5 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
       - run: cd npm && npm ci
-      - run: cd npm && npm publish
+      # TODO: rmv alpha tag
+      - run: cd npm && npm publish --tag alpha

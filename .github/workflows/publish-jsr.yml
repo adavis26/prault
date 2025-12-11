@@ -1,18 +1,18 @@
 name: Publish JSR
 
 on:
-  push:
-    branches: [ main ]
+  repository_dispatch:
+    types: [ci-complete]
   release:
-    types: [ published ]
+    types: [published]
 
 jobs:
   publish-jsr:
     name: Publish to JSR
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'release' || (github.event_name == 'repository_dispatch' && github.event.action == 'ci-complete') }}
     # TEMPORARY: Allow pushes to main during alpha development
     # if: github.event_name == 'release'
-    if: github.event_name == 'release' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
 
     permissions:
       contents: read

@@ -3,7 +3,7 @@
 **Prompt Vault** | A simple, typesafe, file router based prompt management tool.
 
 [![CI/CD](https://github.com/adavis26/prault/actions/workflows/ci.yml/badge.svg)](https://github.com/adavis26/prault/actions/workflows/ci.yml)
-[![JSR](https://jsr.io/badges/@adavis26/prault)](https://jsr.io/@adavis26/prault)
+[![JSR](https://jsr.io/badges/@adavisdev/prault)](https://jsr.io/@adavis26/prault)
 [![npm](https://img.shields.io/npm/v/prault)](https://www.npmjs.com/package/prault)
 
 Keep prompts organized in files. Get full TypeScript support. Replace messy strings with easy auto completion.

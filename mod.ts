@@ -58,6 +58,14 @@ function collectPromptEntries(
   return entries;
 }
 
+/**
+ * --- Prault ---
+ * generates a type-safe TypeScript module for prompt access.
+ * This function reads all .md and .txt files in the prompts directory and creates
+ * a prompts.gen.ts file with auto-generated classes and types.
+ *
+ * @returns A promise that resolves when the generation is complete
+ */
 export async function main() {
   const tree = await scanDir(PROMPTS_DIR);
   const promptNames = collectPromptNames(tree);
